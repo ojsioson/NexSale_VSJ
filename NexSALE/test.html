@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>NexSALE</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,150,300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+
+	<!-- CSS Files -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="${data.files.styles.materialkit}" rel="stylesheet"/>
+		<link href="${data.files.styles.source}" rel="stylesheet"/>
+</head>
+
+<body>
+<style>
+.categories {
+	height: 300px;
+	overflow: scroll;
+	margin: 20px 0px;
+}
+
+.logo-setting {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.circle {
+	margin: 0px 10px !important;
+}
+
+.search-input {
+	height: 50px !important;
+}
+
+/** LIST VIEW/GRID VIEW  **/
+.glyphicon {
+	margin-right: 5px;
+}
+
+.thumbnail {
+    padding: 8px;
+    border-radius: 6px;
+    margin: 8px 0px 20px 0px;
+    box-shadow: 30px 27px 100px -24px #777;
+}
+
+.item.list-group-item {
+	float: none;
+	width: 100%;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+
+.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+	{
+	background: #428bca;
+}
+
+.item.list-group-item .list-group-image {
+	margin-right: 10px;
+}
+
+.item.list-group-item .thumbnail {
+	margin-bottom: 0px;
+}
+
+.item.list-group-item .caption {
+	padding: 9px 9px 0px 9px;
+}
+
+.item.list-group-item:nth-of-type(odd) {
+	background: #eeeeee;
+}
+
+.item.list-group-item:before,.item.list-group-item:after {
+	display: table;
+	content: " ";
+}
+
+.item.list-group-item img {
+	float: left;
+	height: 160px;
+	margin: 20px;
+}
+
+.item.list-group-item:after {
+	clear: both;
+}
+
+.list-group-item-text {
+	margin: 0 0 11px;
+}
+
+.search-results .thumbnail img {
+	height: 145px;
+	width: 160px;
+}
+
+.input-qty {
+	border-left: 1px solid;
+	padding: 3px;
+	margin: auto 0px;
+	width: 45px;
+	text-align: right;
+}
+
+.search-results .btn {
+	box-shadow: 5px 5px 5px -3px grey;
+	margin: 0px;
+	padding: 8px 9px;
+}
+
+.search-results .glyphicon { margin: auto; }
+
+.add {
+	display: inline-flex;
+	float: left;
+}
+
+.item .list-group-item-heading {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+	color: cornflowerblue;
+}
+
+.item p.list-group-item-text {
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addToCart { margin-left: 25%; }
+
+.right { text-align: right; }
+
+div#cartItems .btn-group {
+	display: inline-flex;
+	margin-left: 25%;
+}
+
+div#cartItems .btn-group button{
+	padding: 4px 7px;
+}
+
+div#cartItems .itemQty { width:30%; }
+
+div#cartItems th:nth-child(1) {
+		min-width: 135px;
+		width: 135px;
+}
+div#cartItems th:nth-child(2),
+div#cartItems th:nth-child(3) {
+		width: 10%;
+}
+
+div#cartItems td:nth-child(5) input {
+    width: 80px;
+		text-align: right;
+}
+
+div#cartItems td:nth-child(4) input{
+  width: 100px;
+	min-width: 100px;
+	text-align: right;
+}
+
+
+div#cartItems th:nth-child(7) {
+  width: 70px;
+	text-align: right;
+}
+
+div#cartItems th:nth-child(8) {
+  width: 10px;
+}
+
+.add .btn {
+	box-shadow: 3px 3px 1px grey;
+  padding: 5px 6px;
+  margin: 5px 5px 10px 5px;
+}
+
+td.cartItemQty { min-width:200px; }
+
+.table-responsive { height:350px; }
+
+@media screen and (min-width: 768px) {
+    .modal-dialog {
+      width: 700px; /* New width for default modal */
+    }
+    .modal-sm {
+      width: 350px; /* New width for small modal */
+    }
+}
+@media screen and (min-width: 1025px) {
+    .modal-lg {
+      width: 65%; /* New width for large modal */
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .modal-lg {
+      width: 95%; /* New width for large modal */
+    }
+}
+
+.modal-open .modal { overflow-y: auto; }
+
+.btn.btn-fab.btn-fab-mini .material-icons {
+	 font-size: 30px;
+    left: 18px;
+}
+
+#cartItems tfoot tr {
+	border-bottom-style: hidden;
+}
+
+#cartItems tfoot td {
+	padding: 10px 10px 0px 0px;
+}
+
+
+.well .btn-group {
+	margin: 0 0 0 25%;
+}
+.item_container
+{
+    width: 100%;
+    height: 750px;
+    overflow-y: scroll;
+}
+.thumbnail
+{
+    border: 1px solid #ccc;
+margin-bottom: 5px!important;
+}
+.custom_line_height
+{
+line-height:35px;
+}
+</style>
+<!-- Navigation Section -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+  	<!-- Brand and toggle get grouped for better mobile display -->
+  	<div class="navbar-header">
+  		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+      		<span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+  		</button>
+  		<a class="navbar-brand" href="#">nexSALE</a>
+  	</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<button class="btn btn-raised btn-fab btn-fab-mini btn-rose circle" data-toggle="modal" data-target="#somodal">
+						<i class="material-icons">shopping-cart-plus</i>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="wrapper">
+	<div class="main main-raised" style="padding-top:60px;">
+		<div class="section">
+			<div class="container-fluid">
+
+				<div class="row">
+
+					<!--<div class="col-md-3 logo-placement hidden-xs">
+						<img src="https://system.na1.netsuite.com/core/media/media.nl?id=8330&c=TSTDRV1285764&h=1c9a462612d5c9ab9af7"/>
+					</div>-->
+					<div class="col-md-8">
+						<div class="input-group" style="width: 100%">
+							<input type="text" id="searchterm" class="form-control input-lg search-input" placeholder="Search for Products" data-bind="value: searchTerm, valueUpdate: 'input'"/>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="search-stats">
+							<div class="results" id="stats">
+								Found <span data-bind="text: numResults"></span> Results
+								<span class="time">in <span data-bind="text: runTime"></span>ms</span>
+							</div>
+						</div>
+						<div class="well well-sm">
+				        <div class="btn-group">
+				            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+				            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span>Grid</a>
+				        </div>
+				    </div>
+					</div>
+
+				</div>
+
+				<div class="row ">
+					<div class="col-sm-3 body_container">
+						<!-- Categories Section -->
+						<div data-bind="visible: true , foreach: { data: categories, as: 'category' }">
+							<!--<div class="category">  -->
+								<h6 class="border" data-bind="text: category.id"></h6>
+								<div class="categories_container">
+									<div class="border">
+											<input class="form-control" type="text" placeholder="Search" data-bind="applyCategoryFilter">
+									</div>
+									<div class="categories">
+											<div data-bind="foreach: { data: category.options, as: 'option' }">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" data-bind="checked: option.selected, click: $root.categoryChange.bind($data, category.id, option.id)">
+														<span data-bind="text: option.id"></span>
+														(<span data-bind="text: option.value"></span>)
+													</label>
+												</div>
+											</div>
+									</div>
+								</div>
+							<!--</div>-->
+						</div>
+					</div>
+
+
+					<div class="col-sm-9">
+
+						<!-- Results Section -->
+              <div class="container item_container">
+							<div class="search-results list-group" id="search-results" data-bind="visible: searchItems().length > 0, foreach: { data: searchItems, as: 'item' }" style="display: none;">
+								<div class="item col-xs-12 col-lg-12 col-sm-12">
+			            <div class="thumbnail">
+			                <img class="group list-group-image hidden" data-bind="attr: { src: item.url, alt: item.name }" />
+			                <div class="caption">
+
+<!--Change Start Here @Jomon-->
+<p class="group inner list-group-item-text hidden custom_line_height" data-bind="html: item.description"></p>
+<div class="col-xs-12 col-md-12 pull-left">
+															<div class="col-md-3 col-sm-10 ">
+																<a target="_blank" class="nslink" data-bind="attr: { href: $parent.openIteminNetsuite(item.id()), title: item.name }">
+														<div class="contain">
+														    <div class="content group inner list-group-item-heading" data-bind="text: item.name, alt: item.name">r this box. But I can be scrolled over! (There's a lot more text that does not get rendered.)</div>
+														</div>
+													</a>
+															</div>
+															<div class="col-md-2 col-sm-2  text-center">
+		                             <strong><p class="lead" data-bind="money: item.price"></p></strong>
+															</div>
+															<div class="col-md-3  col-sm-5">
+																<div class="availability custom_line_height text-left" data-bind="if: item.available() != -1">
+																Qty Available: <strong><span data-bind="text: item.available"></span></strong>
+															</div>
+															<div class="availability custom_line_height text-left" data-bind="if: item.available() == -1">
+																Qty Available: <strong><span style="color:red;">Out Of Stock!</span>
+															</div>
+															</div>
+<div class="col-md-2 ">
+															<div class="add" data-bind="itemActions">
+																	<button type="button" class="btn deductIt">
+																		<span class="glyphicon glyphicon-minus"></span>
+																	</button>
+																	<input type="text" class="input-qty" data-bind="value: item.addQty">
+					                        <button type="button" class="btn addIt">
+																		<span class="glyphicon glyphicon-plus"></span>
+																	</button>
+															</div>
+														 </div>
+															<div class="col-md-2 col-sm-3 ">
+ 															<button type="button" class="btn btn-success addToCart" data-bind="click: $parent.addItem.bind($data, item, item.addQty())">
+																<span>Add to Cart</span>
+															</button>
+ 														</div>
+															
+
+		                        </div>
+<!--End Here -->
+
+			                  </div>
+                        <div class="clearfix"></div>
+			                </div>
+
+			            </div>
+							</div>
+            </div>
+							<div class="col-sm-12">
+							<!-- Pagination -->
+							<ul class="pagination pagination-info" class="hidden" data-bind="visible: (searchItems().length > 0 && searchPages() > 1), foreach: { data: pages, as: 'page' }">
+								<li data-bind="visible: page.visible, attr: { class: page.active ? 'active': '' }">
+									<a data-bind="text: page.index, click: $parent.gotoPage.bind($data, page.index, page.action)"></a>
+								</li>
+							</ul>
+							</div>
+					</div>
+				</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade in" id="somodal" tabindex="false" role="document">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="card card-nav-tabs card-plain">
+					<div class="header header-danger">
+						<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+						<div class="nav-tabs-navigation">
+							<div class="nav-tabs-wrapper">
+								<ul class="nav nav-tabs" data-tabs="tabs">
+									<li class="active"><a href="#info" data-toggle="tab">Details</a></li>
+									<li><a href="#cart" data-toggle="tab">Lines (<i data-bind="text: cartItemsAmount() <=0 ?'0': cartItemsAmount()"></i> )
+										Total Qty (<i data-bind="text: totalQty()"></i> )
+									</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="content">
+						<div class="tab-content text-center">
+							<div class="tab-pane active" id="info">{SO}</div>
+							<div class="tab-pane" id="cart">
+								<!--CART-->
+								<div class="table-responsive" id="cartItems">
+					        <table class="table table-striped lineItems">
+										<thead>
+											<tr>
+												<th>Item</th>
+												<th class="center">Qty</th>
+												<th class="center">Price Level</th>
+												<th class="right">Rate</th>
+												<th class="right">Net</th>
+												<th class="center">Tax Amt</th>
+												<th class="center">Gross</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody data-bind="visible: cartItems().length == 0">
+											<tr>
+												<td colspan="7" align="center">No items in cart.</td>
+											</tr>
+										</tbody>
+										<tbody data-bind="visible: cartItems().length != 0, foreach: { data: cartItems, as: 'item', afterRender: itemAfterRender }">
+											<tr>
+												<td align="left">
+													<div><i data-bind="text: item.name"></i> (Available: <span data-bind="text: item.availableOnHand"></span>)</div>
+													<!--<div class="itemcode">Item Code: <i data-bind="text: item.name"></i></div>-->
+												</td>
+												<td class="cartItemQty" >
+													<div class="btn-group">
+															<button class="btn btn-round btn-info btn-xs" data-bind="click: $parent.qtyChange.bind($data, item, 'down')"> <i class="material-icons">remove</i> </button>
+															<input class="itemQty right" type="text" data-bind="value: item.qty, event: { blur: $parent.recomputeLine.bind($data, item, 'itemqty')}"/>
+															<button class="btn btn-round btn-info btn-xs" data-bind="click: $parent.qtyChange.bind($data, item, 'up')"> <i class="material-icons">add</i> </button>
+													</div>
+												</td>
+												<td class="center" >
+													<select class="itemPriceLevel" type="text" data-bind="options: item.priceLevels, optionsText: 'name', optionsValue: 'value', optionsCaption: 'Select', value:item.priceLevel, event: { change: $root.priceLevelChange.bind($data, item)}"></select>
+												</td>
+												<td class="right">
+													<input type="text" class="itemRate" disabled data-bind="value: item.rate, event: { blur: $parent.recomputeLine.bind($data, item, 'rate')}">
+												</td>
+												<td class="right">
+													<input type="text" data-bind="value: item.grossAmount, event: { blur: $root.grossChanged.bind($data, item) }" />
+												</td>
+												<td class="right" data-bind="money: item.taxAmount"></td>
+												<td class="right" data-bind="text: item.amount"></td>
+												<td>
+													<button data-bind="click: $parent.removeItem.bind($data, item)" type="button" rel="tooltip" data-placement="left" title="Remove Item" class="btn btn-simple">
+														<i class="material-icons">close</i>
+													</button>
+												</td>
+											</tr>
+										</tbody>
+										<tfoot data-bind="visible: cartItems().length > 0">
+											<tr>
+												<td colspan="6" align="right">SubTotal</td>
+												<td align="center"><span data-bind="text: subTotal"></span></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="6" align="right">Tax</td>
+												<td align="center"><span data-bind="text: taxTotal"></span></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="6" align="right">Total</td>
+												<td align="center"><span data-bind="text: cartTotal"></span></td>
+												<td></td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal" data-bind="visible: cartItems().length != 0, click: resetCart">Clear Cart</button>
+									<button type="button" class="btn btn-rose" data-dismiss="modal" data-bind="visible: cartItems().length != 0, click: submitCart">Submit Transaction</button>
+					      </div>
+								<!--CART-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-12">
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+	<!--   Core JS Files   -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${data.files.js.materialmin}"></script>
+
+	<!--	Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/9.0.0/nouislider.min.js" type="text/javascript"></script>
+
+	<!--	Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+	<!--	Plugin for Select Form control, full documentation here: https://github.com/FezVrasta/dropdown.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dropdown.js/0.0.2dev/jquery.dropdown.min.js" type="text/javascript"></script>
+
+	<!--	Plugin for Tags, full documentation here: http://xoxco.com/projects/code/tagsinput/  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.5/bootstrap-notify.min.js"></script>
+
+	<!-- Plugin for Algolia -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/3.18.1/algoliasearch.jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/algoliasearch.helper/2/algoliasearch.helper.min.js"></script>
+
+	<!-- Knockback -->
+	<script type="text/javascript" src="${data.files.js.knockback}"></script>
+
+	<!-- Firebase -->
+	<script src="https://cdn.firebase.com/js/client/2.0.3/firebase.js"></script>
+
+	<!-- BackboneFire -->
+	<script src="https://cdn.firebase.com/libs/backbonefire/0.5.1/backbonefire.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.3/numeral.min.js"></script>
+
+	<!-- select 2 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+	<!-- Moment js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+
+	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
+	<script src="${data.files.js.materialkit}" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="https://cdn.css.net/files/tablesaw/0.1.4/tablesaw.css">
+	<script src="https://cdn.css.net/files/tablesaw/0.1.4/tablesaw.stackonly.js"></script>
+
+	<script type="text/javascript">
+               $('.body_container').load(function()
+               {
+                       var height       = $(".body_container").height();console.log(height)
+                       $('.item_container').height(height+'px');
+                })
+		var CONNECTIONS = ${data.connections};
+		var TEMPLATES = ${data.templates};
+		var NEXPOSDATA = ${data.data};
+	</script>
+	<script type="text/javascript" src="${data.files.js.run}"></script>
+</html>

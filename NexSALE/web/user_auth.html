@@ -1,0 +1,150 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>User Authentication</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<style>
+	body {
+	  padding-top: 40px;
+	  padding-bottom: 40px;
+	  background-color: #eee;
+	}
+
+	.form-signin {
+	  max-width: 330px;
+	  padding: 15px;
+	  margin: 0 auto;
+	}
+	.form-signin .form-signin-heading,
+	.form-signin .checkbox {
+	  margin-bottom: 10px;
+	}
+	.form-signin .checkbox {
+	  font-weight: normal;
+	}
+	.form-signin .form-control {
+	  position: relative;
+	  height: auto;
+	  -webkit-box-sizing: border-box;
+	     -moz-box-sizing: border-box;
+	          box-sizing: border-box;
+	  padding: 10px;
+	  font-size: 16px;
+	}
+	.form-signin .form-control:focus {
+	  z-index: 2;
+	}
+	.form-signin input[type="email"] {
+	  margin-bottom: -1px;
+	  border-bottom-right-radius: 0;
+	  border-bottom-left-radius: 0;
+	}
+	.form-signin input[type="password"] {
+	  margin-bottom: 10px;
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	}
+</style>
+<body>
+	<div class="container">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Log In</h2>
+        <label for="uid" class="sr-only">Email address</label>
+				<input type="email" name="username" class="form-control" id="uid" data-bind="value: username"
+					placeholder="Email address" required autofocus></input>
+        <label for="pass" class="sr-only">Password</label>
+				<input id="pass" type="password" name="passw" data-bind="value: password"
+				 	placeholder="Password" class="form-control" required></input>
+					<button id="login" class="btn btn-lg btn-primary btn-block" data-bind="click: login">Login</button>
+      </form>
+  </div>
+	<!--<h2>User Authentication</h2>
+	<form id="login-form" >
+		<label for="uid">Email</label>
+		<input type="email" name="username" id="uid" data-bind="value: username"
+			placeholder="Enter your email" required></input><br/>
+		<label for="pass">Password</label>
+		<input id="pass" type="password" name="passw" data-bind="value: password"
+		 	placeholder="Enter your password" required></input><br/>
+		<button id="login" data-bind="click: login">Login</button>
+	</form>-->
+	<script
+			  src="https://code.jquery.com/jquery-1.12.4.min.js"
+			  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+			  crossorigin="anonymous"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js">
+	</script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js">
+	</script>
+	<script  type="text/javascript">
+		var url = '${data.SL_EXTERN_URL}';
+		function LoginViewModel() {
+			var self = this;
+			self.username = ko.observable('');
+			self.password = ko.observable('');
+
+			self.login = function() {
+				//console.log('Logging In '+self.username()+' pass: '+self.password());
+				$.post(url, {
+						username: self.username(),
+						passw: self.password()
+					}, function( data ) {
+						var result = JSON.parse(data);
+						//console.log(result);
+						if(data)
+						{
+							alert(result.message);
+							Cookies.remove('identify');
+							switch (result.status) {
+								case 1:
+									console.log('success');
+									if(result.hashed)
+									{
+										document.cookie += ';identify='+result.hashed+';';
+										Cookies.set('identify', result.hashed);
+										console.log(document.cookie);
+
+										self.token = result.hashed;
+										location.reload();
+									} else {
+										console.log('${data.REDIR}');
+										window.location = '${data.REDIR}';
+									}
+									break;
+									case 0:
+										console.log('fail');
+										break;
+										case -1:
+											console.log('error');
+											break;
+								default:
+									break;
+							}
+						}
+					});
+			};
+
+			self.check = function() {
+				$.post(url, {token: self.token},
+					function(data) {
+					var result = JSON.parse(data);
+					if(data)
+					{
+							alert(result.message);
+					}
+				})
+			};
+		}
+
+		var loginView = new LoginViewModel();
+		ko.applyBindings(loginView);
+	</script>
+</body>
+
+</html>
